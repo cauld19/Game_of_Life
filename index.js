@@ -2,6 +2,8 @@
 let originalGrid;
 let userGrid;
 
+let presetMaker;
+
 let preset1;
 let preset2;
 let preset3;
@@ -53,8 +55,8 @@ function createRandomArray(array) {
 }
 
 let grid = create2dArray(cols, rows)
-const secondGrid = createNext2dArray(grid)
-createPresetArrays(grid)
+let secondGrid = createNext2dArray(grid)
+presetMaker = createPresetArrays(grid)
 
 function createGrid () {
     let container = document.querySelector(".container") // grab container div from html
@@ -321,20 +323,28 @@ function changeSpeed() {
 function changeSize() {
     playing = false;
     let input = Number(document.getElementById("changeSizeInput").value);
+    if (input == 0) {
+        return null;
+    }
+    console.log(input)
     cols =  input;
     rows = input;
     clearTimeout(myTimeOut);
 
-    userArray = create2dArray(input, input)
-    grid = userArray
+    userArray = create2dArray(input, input);
+    grid = userArray;
+    secondGrid = createNext2dArray(grid)
 
-    userGrid = createGrid()
-    userGrid = originalGrid
-    document.getElementById("grid").remove()
+    userGrid = createGrid();
+    userGrid = originalGrid;
+    document.getElementById("grid").remove();
+
     next2dArray(grid);
     swapGrids();
     populateGrid();
-    
+    userPreset = createPresetArrays(grid);
+    presetMaker = userPreset;
+
 }
 
 window.onload = loadGrid() // load grid to page onload
