@@ -75,10 +75,16 @@ function createGrid () {
 }
 
 let container = document.querySelector(".container"); // grab container div from html
+
 let startButton = document.createElement("BUTTON")
 startButton.textContent = "Start";
 startButton.addEventListener('click', buttonClick)
 container.appendChild(startButton);
+
+let stepStart = document.createElement("BUTTON")
+stepStart.textContent = "Step";
+stepStart.addEventListener('click', stepButton)
+container.appendChild(stepStart);
 
 let resetButton = document.createElement("BUTTON")
 resetButton.textContent = "Reset";
@@ -203,7 +209,7 @@ function handleClick() {
     }   
 }
 
-function buttonClick () {
+function buttonClick() {
     playing = true;
     // table = document.getElementById("grid");
     // rows = table.getElementsByTagName("tr")
@@ -215,6 +221,13 @@ function buttonClick () {
     //     }
     // }
     evolve()
+}
+
+function stepButton() {
+    clearTimeout(myTimeOut)
+    next2dArray(grid);
+    swapGrids();
+    populateGrid();
 }
 
 function resetClick() {
