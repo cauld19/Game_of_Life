@@ -1,4 +1,7 @@
 
+let originalGrid;
+let userGrid;
+
 let preset1;
 let preset2;
 let preset3;
@@ -7,11 +10,11 @@ let playing = false;
 let myTimeOut;
 let speed = 1000;
 
-cols = 40
-rows = 40
+let cols = 40;
+let rows = 40;
 
-function create2dArray() {
-    let currGrid = new Array(cols).fill(null).map(() => new Array(rows).fill(0));
+function create2dArray(height, width) {
+    let currGrid = new Array(height).fill(null).map(() => new Array(width).fill(0));
         for(let col = 0; col < currGrid.length; col++){
             for(let row = 0; row < currGrid.length; row++){
                 const cell = currGrid[row][col]
@@ -49,7 +52,7 @@ function createRandomArray(array) {
     return random;
 }
 
-const grid = create2dArray()
+let grid = create2dArray(cols, rows)
 const secondGrid = createNext2dArray(grid)
 createPresetArrays(grid)
 
@@ -126,6 +129,17 @@ speedButton.textContent = "Speed";
 speedButton.addEventListener('click', changeSpeed)
 container.appendChild(speedInput);
 container.appendChild(speedButton);
+
+let sizeInput = document.createElement("INPUT")
+sizeInput.setAttribute("type", "number");
+sizeInput.setAttribute('id', "changeSizeInput");
+sizeInput.setAttribute("min", "10")
+sizeInput.setAttribute("max", "120")
+let sizeButton = document.createElement("BUTTON")
+sizeButton.textContent = "Size";
+sizeButton.addEventListener('click', changeSize)
+container.appendChild(sizeInput);
+container.appendChild(sizeButton);
 
 
 
@@ -302,12 +316,30 @@ function changeSpeed() {
             speed = 1000 * value
         }
     }
+}
 
+function changeSize() {
+    playing = false;
+    let input = Number(document.getElementById("changeSizeInput").value);
+    cols =  input;
+    rows = input;
+    clearTimeout(myTimeOut);
+
+    userArray = create2dArray(input, input)
+    grid = userArray
+
+    userGrid = createGrid()
+    userGrid = originalGrid
+    document.getElementById("grid").remove()
+    next2dArray(grid);
+    swapGrids();
+    populateGrid();
+    
 }
 
 window.onload = loadGrid() // load grid to page onload
 
 function loadGrid () {
-    createGrid()
+    originalGrid = createGrid()
 }
 
