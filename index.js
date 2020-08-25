@@ -93,53 +93,55 @@ container.appendChild(stepStart);
 
 let resetButton = document.createElement("BUTTON")
 resetButton.textContent = "Reset";
-resetButton.addEventListener('click', resetClick)
+resetButton.addEventListener('click', resetClick);
 container.appendChild(resetButton);
 
-let pauseButton = document.createElement("BUTTON")
+let pauseButton = document.createElement("BUTTON");
 pauseButton.textContent = "Pause";
-pauseButton.addEventListener('click', pauseClick)
+pauseButton.addEventListener('click', pauseClick);
 container.appendChild(pauseButton);
 
-let preset1Button = document.createElement("BUTTON")
+let preset1Button = document.createElement("BUTTON");
 preset1Button.textContent = "preset1";
-preset1Button.addEventListener('click', presetClick)
+preset1Button.addEventListener('click', presetClick);
 container.appendChild(preset1Button);
 
-let preset2Button = document.createElement("BUTTON")
+let preset2Button = document.createElement("BUTTON");
 preset2Button.textContent = "preset2";
-preset2Button.addEventListener('click', presetClick)
+preset2Button.addEventListener('click', presetClick);
 container.appendChild(preset2Button);
 
-let preset3Button = document.createElement("BUTTON")
+let preset3Button = document.createElement("BUTTON");
 preset3Button.textContent = "preset3";
-preset3Button.addEventListener('click', presetClick)
+preset3Button.addEventListener('click', presetClick);
 container.appendChild(preset3Button);
 
-let randomButton = document.createElement("BUTTON")
+let randomButton = document.createElement("BUTTON");
 randomButton.textContent = "random";
-randomButton.addEventListener('click', presetClick)
+randomButton.addEventListener('click', presetClick);
 container.appendChild(randomButton);
 
-let speedInput = document.createElement("INPUT")
+let speedInput = document.createElement("INPUT");
 speedInput.setAttribute("type", "number");
 speedInput.setAttribute('id', "changeSpeedInput");
-speedInput.setAttribute("min", "1")
-speedInput.setAttribute("max", "11")
-let speedButton = document.createElement("BUTTON")
+speedInput.setAttribute("min", "1");
+speedInput.setAttribute("max", "11");
+speedInput.setAttribute("value", "1")
+let speedButton = document.createElement("BUTTON");
 speedButton.textContent = "Speed";
-speedButton.addEventListener('click', changeSpeed)
+speedButton.addEventListener('click', changeSpeed);
 container.appendChild(speedInput);
 container.appendChild(speedButton);
 
-let sizeInput = document.createElement("INPUT")
+let sizeInput = document.createElement("INPUT");
 sizeInput.setAttribute("type", "number");
 sizeInput.setAttribute('id', "changeSizeInput");
-sizeInput.setAttribute("min", "10")
-sizeInput.setAttribute("max", "120")
-let sizeButton = document.createElement("BUTTON")
+sizeInput.setAttribute("min", "10");
+sizeInput.setAttribute("max", "120");
+sizeInput.setAttribute("value", "40");
+let sizeButton = document.createElement("BUTTON");
 sizeButton.textContent = "Size";
-sizeButton.addEventListener('click', changeSize)
+sizeButton.addEventListener('click', changeSize);
 container.appendChild(sizeInput);
 container.appendChild(sizeButton);
 
@@ -148,7 +150,7 @@ container.appendChild(sizeButton);
 function next2dArray(grid) {
     for(let col = 0; col < grid.length; col++){
         for(let row = 0; row < grid.length; row++){
-            let count = 0
+            let count = 0;
             for(let i = -1; i < 2; i++){
                 for(let j = -1; j < 2; j++){
                     if(i === 0 && j ===0) {
@@ -157,17 +159,17 @@ function next2dArray(grid) {
                     const colWrap = (col + i + cols) % cols;
                     const rowWrap = (row + j + rows) % rows;
 
-                    count += grid[colWrap][rowWrap]
+                    count += grid[colWrap][rowWrap];
 
                     if (cell = 0) {
                         if (count == 3) {
-                            secondGrid[col][row] = 1
+                            secondGrid[col][row] = 1;
                         }
                     } else {
                         if (count == 2 || count == 3) {
-                            secondGrid[col][row] = 1
+                            secondGrid[col][row] = 1;
                         } else {
-                            secondGrid[col][row] = 0
+                            secondGrid[col][row] = 0;
                         }
                     }
                 }
@@ -210,7 +212,7 @@ function evolve(){
 
 function handleClick() {
     if (playing == false) {
-        let location = this.id.split("-")
+        let location = this.id.split("-");
         let row = Number(location[0]);
         let col = Number(location[1]);
         if (this.className==='alive'){
@@ -236,33 +238,33 @@ function buttonClick() {
     //         tds[j].setAttribute("playing", "true")
     //     }
     // }
-    evolve()
+    evolve();
 }
 
 function stepButton() {
-    clearTimeout(myTimeOut)
+    clearTimeout(myTimeOut);
     next2dArray(grid);
     swapGrids();
     populateGrid();
 }
 
 function resetClick() {
-    location.reload()
+    location.reload();
 }
 
 function pauseClick() {
     playing = false;
-    clearTimeout(myTimeOut)
+    clearTimeout(myTimeOut);
 }
 
 function presetClick(event) {
     if(event.target.textContent.includes("1")) {
-        clearTimeout(myTimeOut)
+        clearTimeout(myTimeOut);
         for (row in grid) {
             for (col in grid[row]) {
                 grid[row][col] = preset1[row][col];
                 secondGrid[row][col] = 0;
-                populateGrid()
+                populateGrid();
             }
         }
     } else if (event.target.textContent.includes("2")) {
@@ -271,7 +273,7 @@ function presetClick(event) {
             for (col in grid[row]) {
                 grid[row][col] = preset2[row][col];
                 secondGrid[row][col] = 0;
-                populateGrid()
+                populateGrid();
             }
         }
     } else if (event.target.textContent.includes("3")) {
@@ -280,7 +282,7 @@ function presetClick(event) {
             for (col in grid[row]) {
                 grid[row][col] = preset3[row][col];
                 secondGrid[row][col] = 0;
-                populateGrid()
+                populateGrid();
             }
         }
     } else {
@@ -290,7 +292,7 @@ function presetClick(event) {
             for (col in grid[row]) {
                 grid[row][col] = random[row][col];
                 secondGrid[row][col] = 0;
-                populateGrid()
+                populateGrid();
             }
         }
 
@@ -315,7 +317,7 @@ function changeSpeed() {
             
     for (let [key, value] of Object.entries(speedValues)) {
         if(input == key) {
-            speed = 1000 * value
+            speed = 1000 * value;
         }
     }
 }
@@ -333,7 +335,7 @@ function changeSize() {
 
     userArray = create2dArray(input, input);
     grid = userArray;
-    secondGrid = createNext2dArray(grid)
+    secondGrid = createNext2dArray(grid);
 
     userGrid = createGrid();
     userGrid = originalGrid;
@@ -347,9 +349,9 @@ function changeSize() {
 
 }
 
-window.onload = loadGrid() // load grid to page onload
+window.onload = loadGrid(); // load grid to page onload
 
 function loadGrid () {
-    originalGrid = createGrid()
+    originalGrid = createGrid();
 }
 
