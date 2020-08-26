@@ -22,3 +22,7 @@ td.dead {
 td.alive {
     background-color:black;
 }
+
+.main {
+    display: flex;
+}

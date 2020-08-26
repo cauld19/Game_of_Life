@@ -9,7 +9,11 @@ let preset2;
 let preset3;
 
 let playing = false;
+
 let myTimeOut;
+let timer = 0;
+let timerArray = [];
+
 let speed = 1000;
 
 let cols = 40;
@@ -146,6 +150,13 @@ container.appendChild(sizeInput);
 container.appendChild(sizeButton);
 
 
+let timerh1 = document.getElementById("timerh1");
+
+
+
+
+
+
 
 function next2dArray(grid) {
     for(let col = 0; col < grid.length; col++){
@@ -208,6 +219,11 @@ function evolve(){
     populateGrid();
 
     myTimeOut = setTimeout(evolve, speed);
+    if (myTimeOut) {
+        timer += 1;
+        timerh1.innerHTML= `${timer}`;
+    }
+
 }
 
 function handleClick() {
@@ -228,6 +244,9 @@ function handleClick() {
 }
 
 function buttonClick() {
+    if (playing) {
+        return null;
+    }
     playing = true;
     // table = document.getElementById("grid");
     // rows = table.getElementsByTagName("tr")
@@ -241,7 +260,12 @@ function buttonClick() {
     evolve();
 }
 
-function stepButton() {
+function stepButton(event) {
+    if (MouseEvent) {
+        timer += 1;
+        timerh1.innerHTML= `${timer}`;
+    }
+    console.log(timer)
     clearTimeout(myTimeOut);
     next2dArray(grid);
     swapGrids();
@@ -260,6 +284,8 @@ function pauseClick() {
 function presetClick(event) {
     if(event.target.textContent.includes("1")) {
         clearTimeout(myTimeOut);
+        timer = 0;
+        timerh1.innerHTML= `${timer}`;
         for (row in grid) {
             for (col in grid[row]) {
                 grid[row][col] = preset1[row][col];
@@ -269,6 +295,8 @@ function presetClick(event) {
         }
     } else if (event.target.textContent.includes("2")) {
         clearTimeout(myTimeOut);
+        timer = 0;
+        timerh1.innerHTML= `${timer}`;
         for (row in grid) {
             for (col in grid[row]) {
                 grid[row][col] = preset2[row][col];
@@ -278,6 +306,7 @@ function presetClick(event) {
         }
     } else if (event.target.textContent.includes("3")) {
         clearTimeout(myTimeOut);
+        timer = 0;
         for (row in grid) {
             for (col in grid[row]) {
                 grid[row][col] = preset3[row][col];
@@ -287,6 +316,8 @@ function presetClick(event) {
         }
     } else {
         clearTimeout(myTimeOut);
+        timer = 0;
+        timerh1.innerHTML= `${timer}`;
         createRandomArray(grid);
         for (row in grid) {
             for (col in grid[row]) {
@@ -328,10 +359,11 @@ function changeSize() {
     if (input == 0) {
         return null;
     }
-    console.log(input)
     cols =  input;
     rows = input;
     clearTimeout(myTimeOut);
+    timer = 0;
+    timerh1.innerHTML= `${timer}`;
 
     userArray = create2dArray(input, input);
     grid = userArray;
