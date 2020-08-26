@@ -12,7 +12,6 @@ let playing = false;
 
 let myTimeOut;
 let timer = 0;
-let timerArray = [];
 
 let speed = 1000;
 
@@ -21,11 +20,6 @@ let rows = 40;
 
 function create2dArray(height, width) {
     let currGrid = new Array(height).fill(null).map(() => new Array(width).fill(0));
-        for(let col = 0; col < currGrid.length; col++){
-            for(let row = 0; row < currGrid.length; row++){
-                const cell = currGrid[row][col]
-            }
-        }
     return currGrid;
 }
 
@@ -261,11 +255,11 @@ function buttonClick() {
 }
 
 function stepButton(event) {
+    playing = false;
     if (MouseEvent) {
         timer += 1;
         timerh1.innerHTML= `${timer}`;
     }
-    console.log(timer)
     clearTimeout(myTimeOut);
     next2dArray(grid);
     swapGrids();
