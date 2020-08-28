@@ -1,4 +1,6 @@
 
+// variables declared
+
 let originalGrid;
 let userGrid;
 
@@ -17,6 +19,8 @@ let speed = 1000;
 
 let cols = 40;
 let rows = 40;
+
+// creating 2d array - 2d array for next evolution - preset arrays - random arrays
 
 function create2dArray(height, width) {
     let currGrid = new Array(height).fill(null).map(() => new Array(width).fill(0));
@@ -56,6 +60,8 @@ let grid = create2dArray(cols, rows)
 let secondGrid = createNext2dArray(grid)
 presetMaker = createPresetArrays(grid)
 
+// create grid and other html elements
+
 function createGrid () {
     let container = document.querySelector(".container") // grab container div from html
 
@@ -68,7 +74,6 @@ function createGrid () {
             let cell = document.createElement("td") // create cells
             cell.setAttribute('id', i + "-" + j)
             cell.setAttribute('class', 'dead')
-            // cell.setAttribute('playing', 'false')
             cell.addEventListener("click", handleClick)
             row.appendChild(cell) // append each cell to rows
         }
@@ -143,14 +148,9 @@ sizeButton.addEventListener('click', changeSize);
 container.appendChild(sizeInput);
 container.appendChild(sizeButton);
 
-
 let timerh1 = document.getElementById("timerh1");
 
-
-
-
-
-
+// function to determine next evolution of array
 
 function next2dArray(grid) {
     for(let col = 0; col < grid.length; col++){
@@ -161,10 +161,15 @@ function next2dArray(grid) {
                     if(i === 0 && j ===0) {
                         continue;
                     }
+
+                    // handling borders of grid - wrap around using modulus (handles -1 value)
+
                     const colWrap = (col + i + cols) % cols;
                     const rowWrap = (row + j + rows) % rows;
 
                     count += grid[colWrap][rowWrap];
+
+                    // rules for game
 
                     if (cell = 0) {
                         if (count == 3) {
@@ -184,6 +189,8 @@ function next2dArray(grid) {
 
 }
 
+// swap original array and next evolution array - reset second array to 0s
+
 function swapGrids() {    
     for (row in grid) {
         for (col in grid[row]) {
@@ -192,6 +199,8 @@ function swapGrids() {
         }
     }
 }
+
+// populate html grid with next2darray function values
 
 function populateGrid() {
     let cell='';
@@ -207,6 +216,8 @@ function populateGrid() {
     }
 }
 
+// run game of life and hanlde the count of evolutions
+
 function evolve(){
     next2dArray(grid);
     swapGrids();
@@ -219,6 +230,8 @@ function evolve(){
     }
 
 }
+
+// handle click of cells on grid (dead / alive)
 
 function handleClick() {
     if (playing == false) {
@@ -237,22 +250,19 @@ function handleClick() {
     }   
 }
 
+// start button
+
 function buttonClick() {
     if (playing) {
         return null;
     }
+
     playing = true;
-    // table = document.getElementById("grid");
-    // rows = table.getElementsByTagName("tr")
-    // tds = null;
-    // for (let i = 0; i < rows.length; i++ ) { // for loop to create table rows
-    //     tds = rows[i].getElementsByTagName("td")
-    //     for(let j = 0; j < tds.length; j++) { // for loop to create cells 
-    //         tds[j].setAttribute("playing", "true")
-    //     }
-    // }
+
     evolve();
 }
+
+// step through evolutions manually
 
 function stepButton(event) {
     playing = false;
@@ -266,14 +276,20 @@ function stepButton(event) {
     populateGrid();
 }
 
+// reset page
+
 function resetClick() {
     location.reload();
 }
+
+// pause evolutions
 
 function pauseClick() {
     playing = false;
     clearTimeout(myTimeOut);
 }
+
+// set preset or random grid
 
 function presetClick(event) {
     if(event.target.textContent.includes("1")) {
@@ -324,6 +340,8 @@ function presetClick(event) {
     } 
 }
 
+// change speed of evolutions
+
 function changeSpeed() {
     let input = Number(document.getElementById("changeSpeedInput").value);
     speedValues = {
@@ -346,6 +364,8 @@ function changeSpeed() {
         }
     }
 }
+
+// change size of grid
 
 function changeSize() {
     playing = false;
@@ -374,6 +394,8 @@ function changeSize() {
     presetMaker = userPreset;
 
 }
+
+// load grid 
 
 window.onload = loadGrid(); // load grid to page onload
 
