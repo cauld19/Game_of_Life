@@ -155,6 +155,7 @@ let timerh1 = document.getElementById("timerh1");
 function next2dArray(grid) {
     for(let col = 0; col < grid.length; col++){
         for(let row = 0; row < grid.length; row++){
+            let cell = grid[col][row];
             let count = 0;
             for(let i = -1; i < 2; i++){
                 for(let j = -1; j < 2; j++){
@@ -171,16 +172,12 @@ function next2dArray(grid) {
 
                     // rules for game
 
-                    if (cell = 0) {
-                        if (count == 3) {
-                            secondGrid[col][row] = 1;
-                        }
+                    if (cell === 1 && count === 2 || count === 3) {
+                        secondGrid[col][row] = 1;
+                    } else if (cell === 0 && count === 3) {
+                        secondGrid[col][row] = 1;
                     } else {
-                        if (count == 2 || count == 3) {
-                            secondGrid[col][row] = 1;
-                        } else {
-                            secondGrid[col][row] = 0;
-                        }
+                        secondGrid[col][row] = 0;
                     }
                 }
             }
