@@ -289,6 +289,7 @@ function pauseClick() {
 // set preset or random grid
 
 function presetClick(event) {
+    playing = false;
     if(event.target.textContent.includes("1")) {
         clearTimeout(myTimeOut);
         timer = 0;
